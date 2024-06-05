@@ -128,6 +128,11 @@ class GraphSparqlQAChain(Chain):
             generated_sparql, color="green", end="\n", verbose=self.verbose
         )
 
+        if generated_sparql.startswith("```"):
+            generated_sparql = generated_sparql[3:]
+            if generated_sparql.endswith("```"):
+                generated_sparql = generated_sparql[:-3]
+            
         if intent == "SELECT":
             context = self.graph.query(generated_sparql)
 
